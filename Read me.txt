@@ -1,0 +1,3 @@
+1. CMD : npm install
+2. CMD : node app
+3. url test: localhost:3000

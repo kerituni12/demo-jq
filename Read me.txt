@@ -1,3 +1,3 @@
 1. CMD : npm install
 2. CMD : node app
-3. url test: localhost:3000
+3. url test: localhost:3000 or https://hieunv99.herokuapp.com/

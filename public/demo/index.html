@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Placeholder Typewriter jQuery Plugin</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="demo.css">
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="../placeholderTypewriter.js"></script>
+<script src="../typing.js"></script>
+
+</head>
+<body>
+
+<form class="search-box__wrapper">
+
+<p id='typing'></p>
+
+  <input class="search-box" type="text" name="search" id="search">
+  <input class="search-box__submit" type="submit" value="Search">
+
+</form>
+<!-- /.search-box__wrapper -->
+
+<script>
+
+  /* Placeholder Typewriter */
+  var placeholderText = [
+    "Where would you like to go?",
+    "Amsterdam?",
+    "Paris?",
+    "Berlin?",
+    "London?",
+    "New York?",
+    "San Francisco?"
+  ];
+
+  $('#search').placeholderTypewriter({text: placeholderText});
+	$('#typing').typingEf(placeholderText);
+
+</script>
+
+
+</body>
+</html>

@@ -1,65 +1,282 @@
-<html>
+﻿<html lang="en">
 
 <head>
-    <title>My Sample</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+    <link rel="mask-icon" type=""
+        href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg"
+        color="#111">
+    <title>Tìm hiểu jquery</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
+    <script src="http://malsup.github.com/jquery.form.js"></script>
 
-            $('#countme').click(function() {
-                var current = $(this).text()
-                $(this).text(parseInt(current, 10) + 1);
-            }).css({
-                margin: '0 10em',
-                backgroundColor: '#ccc',
-                textAlign: 'center',
-                fontSize: '40px'
-            });
-
-            $("#clickme").click(function() {
-                $("#book").animate({
-                    opacity: "toggle",
-                    height: "toggle"
-                }, 2500, function() {
-                    // Animation complete.
-                });
-            });
-
-            $('#allUsersButton').click(() => {
-                $.ajax({
-                    url: 'users',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: (data) => {
-                        console.log('You received some data!', data);
-                        $('#status').html('All users: ' + data);
-                    },
-                });
-            });
-
-            $(document).ajaxError(() => {
-                $('#status').html('Error: unknown ajaxError!');
-            });
-
-        });
-    </script>
 </head>
 
 <body>
-    <div style="text-align: center">
-        <p>Demo jq html</p>
-        <div id="countme">0</div>
-        <br>
 
-        <p id="clickme" style="margin-bottom: 20px">Demo animate (click here)</p>
-        <div id='book' style="background-color:red; height:150px ;margin: 0 40%"></div>
-        <p id="clickme" style="margin-bottom: 20px">Demo ajax</p>
-        <button id="allUsersButton">Get all usernames</button>
-        <br>
-        <br>
-        <div id="status"></div>
+    <div class="blog-slider">
+
+        <div class="blog-slider__wrp swiper-wrapper">
+            <div class="blog-slider__item swiper-slide swiper-slide-active">
+                <div class="blog-slider__img">
+                    <img id="img"
+                        src="https://res.cloudinary.com/muhammederdem/image/upload/v1535759871/alessandro-capuzzi-799180-unsplash.jpg"
+                        alt="">
+                </div>
+                <div class="blog-slider__content">
+                    <div class="blog-slider__title">Nhóm 13</div>
+                    <div class="blog-slider__text" id="blog-text">Đề tài</div>
+                    <div class="blog-slider__text" id="typing"></div>
+                    <button class="blog-slider__button">Xem thành viên</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile">
+        <!-- <div class="blog-slider__img">
+            <img id="img" src="https://res.cloudinary.com/muhammederdem/image/upload/v1535759871/alessandro-capuzzi-799180-unsplash.jpg" alt="">
+            <div style="padding: 12px;">
+            	<a href="" class="btn-pro"> view</a>
+            	<a href="" class="btn-pro right"> edit</a>
+            </div>                
+        </div>      -->
+    </div>
+
+    <div class="modal" id="view">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thành viên</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Tên:</label>
+                            <input type="text" class="form-control" id="view__name">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Job:</label>
+                            <input type="text" class="form-control" id="view__job" name="job">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Mô tả:</label>
+                            <textarea class="form-control" id="view__des"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Ảnh:</label>
+                            <div class="fileUpload">
+                                <img src="" class="imgPreview" alt="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="edit">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thành Viên</h5>
+                    <button type="button" class="close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form encType="multipart/form-data" method="POST" id="edit-form">
+                        <div class="form-group">
+                            <label class="col-form-label">Tên:</label>
+                            <input type="text" class="form-control" id="edit__name" name="name">
+                            <input type="hidden" class="form-control" id="edit__id" name="id">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Job:</label>
+                            <input type="text" class="form-control" id="edit__job" name="job">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Mô tả:</label>
+                            <textarea class="form-control" id="edit__des" name="des"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Upload Ảnh:</label>
+                            <div class="fileUpload">
+                                <img src="" class="imgPreview" alt="">
+                            </div>
+                            <input type="file" name="image" id="imgpro" />
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="save"> Lưu </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </body>
+<script src="./js/typing.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var img = $("#img");
+
+        img.animate({
+            left: 0,
+            bottom: 0
+        }, {
+            step: function (now, fx) {
+                $(this).css('-webkit-transform', 'rotate(' + now + 'deg)');
+                $(this).css('-moz-transform', 'rotate(' + now + 'deg)');
+                $(this).css('transform', 'rotate(' + now + 'deg)');
+            },
+            duration: 100
+        });
+
+        $('.blog-slider__code').fadeIn(500);
+        $('.blog-slider__title').fadeIn(1000);
+        $('.blog-slider__text').fadeIn(1500);
+
+        /* Placeholder Typewriter */
+        var placeholderText = [
+            "Tìm hiểu jquery",
+            "Nguyễn Văn Hiếu",
+            "Ngô Xuân Hải",
+            "Tạ Hoàng Trí",
+            "Nguyễn Công Khanh"
+        ];
+
+        $('#typing').typingEf(placeholderText, $('#blog-text'));
+
+
+        $('body').on('click', '.view', function () {
+
+            event.preventDefault();
+            var id = $(this).data('id');
+            $.ajax({
+                url: 'users/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: (data) => {
+
+                    // console.log(data);
+                    $('#view__name').val(data.name);
+                    $('#view__job').val(data.job);
+                    $('#view__des').val(data.des);
+                    $('.imgPreview').attr('src', './img/' + data.img);
+                    $('#imgpro').val("");
+                }
+            });
+
+            $('#view').show();
+        });
+
+        $('body').on('click', '.edit', function (mem) {
+
+            event.preventDefault();
+            var id = $(this).data('id');
+            $.ajax({
+                url: 'users/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: (data) => {
+
+                    // console.log(data);                    
+                    $('#edit__id').val(id);
+                    $('#edit__name').val(data.name);
+                    $('#edit__job').val(data.job);
+                    $('#edit__des').val(data.des);
+                    $('.imgPreview').attr('src', './img/' + data.img);
+                    $('#imgpro').val("");
+                }
+            });
+
+            $('#edit').show();
+        });
+
+        $('body').on('click', '.close', function () {
+            $('.modal').hide();
+        });
+
+        $('.blog-slider__button').click(function () {
+            $.ajax({
+                url: 'users',
+                type: 'GET',
+                dataType: 'json',
+                success: (data) => {
+                    var html = "";
+                    data.forEach(function (d, i) {
+                        html += `<div class="blog-slider__img">
+						                <img id="img" src="./img/${d[1].img}" alt="">
+						                <div style="padding: 12px;">
+						                	<button class="view btn-pro" data-id="${i}"> view</button>
+						                	<button class="edit btn-pro right" data-id="${i}"> edit</button>
+						                </div>                
+						            </div>     `
+                    });
+                    $('.profile').html(html);
+                    $('.profile').css('display', 'flex');
+                    $('.blog-slider').css('margin-top', '50px');
+                }
+            });
+
+        });
+
+        $('#edit-form').submit(function (e) {
+            e.preventDefault();
+            var idpro = $('#edit__id').val();   
+
+            var data = {};
+            data.id = idpro;            
+
+            $(this).ajaxSubmit({
+                url: 'users/' + idpro,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: (data) => {
+                    // location.reload() not working; 
+                }
+            });
+
+            //wait to load page after ajax sucess
+            setTimeout(function () {
+                location.reload();
+            }, 100);
+
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                // console.log(input.files[0]);
+                reader.onload = function (e) {
+                    $(".imgPreview").attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgpro").change(function () {
+            readURL(this);
+        });
+
+
+    });
+</script>
 
 </html>

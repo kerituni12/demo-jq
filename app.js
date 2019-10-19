@@ -3,20 +3,31 @@ const app = express();
 const fileUpload = require('express-fileupload');
 const body = require('body-parser');
 var jsonfile = require('jsonfile');
+var path = require('path');
 
-
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 app.use(fileUpload());
 app.use(express.static('public'));
 app.use(body.json());
 
+// read fakeDatabase
 var fakeDatabase = {};
 jsonfile.readFile('./data.json', function (err, obj) {
-  if (err) console.error(err)  
+  if (err) console.error(err)
   fakeDatabase = obj;
 });
 
+/* 
+  Router
+*/
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
 app.get('/users', (req, res) => {
-  const allUsernames = Object.entries(fakeDatabase); 
+  const allUsernames = Object.entries(fakeDatabase);
   res.send(allUsernames);
 });
 
@@ -27,13 +38,13 @@ app.get('/users/:userid', (req, res) => {
   if (val) {
     res.send(val);
   } else {
-    res.send({}); 
+    res.send({});
   }
 });
 
-app.post('/users/:userid', function(req, res) {
- 
-	const id = req.params.userid;
+app.post('/users/:userid', function (req, res) {
+
+  const id = req.params.userid;
 
   const name = req.body.name;
   const job = req.body.job;
@@ -41,32 +52,33 @@ app.post('/users/:userid', function(req, res) {
 
   var imageFile = req.files ? 'have file' : "";
 
-  // if(req.files) imageFile = 'have file';
-  // else imageFile = "";
-
+  //set data
   fakeDatabase[id].name = name;
   fakeDatabase[id].job = job;
   fakeDatabase[id].des = des;
-  
+
+  // check img
   if (imageFile != "") {
     var Image = req.files.image;
     var path = __dirname + '/public/img/' + Image.name;
 
+    // upload file to path
     Image.mv(path, function (err) {
       if (err) {
         return res.status(500).send(err);
       }
     });
+    // set data
     fakeDatabase[id].img = Image.name;
   }
 
-  jsonfile.writeFile('./data.json', fakeDatabase, function(err) {
-    if (err) throw err; 
-  });	
+  // write data to json file
+  jsonfile.writeFile('./data.json', fakeDatabase, function (err) {
+    if (err) throw err;
+  });
 
-  res.send('ok');
-  //res.redirect('back');
-  //res.render('index');
+  // sent to run code after ajax
+  res.send({});
 });
 
 app.listen(process.env.PORT || 3000, () => {

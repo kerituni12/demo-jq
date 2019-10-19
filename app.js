@@ -36,7 +36,12 @@ app.get('/users/:userid', (req, res) => {
   const val = fakeDatabase[id];
   //console.log(val);
   if (val) {
-    res.send(val);
+
+    //delay res
+    setTimeout(function () {
+      res.send(val);
+    }, 600); 
+    
   } else {
     res.send({});
   }

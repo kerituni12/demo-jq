@@ -63,18 +63,25 @@ $(document).ready(function () {
             url: 'users/' + id,
             type: 'GET',
             dataType: 'json',
+            cache: false,
+            beforeSend: function(){
+                $('#loading').show();
+            },
+            complete: function(){
+                $('#loading').hide();
+            },
             success: (data) => {
-
                 // console.log(data);
                 $('#view__name').val(data.name);
                 $('#view__job').val(data.job);
                 $('#view__des').val(data.des);
                 $('.imgPreview').attr('src', './img/' + data.img);
                 $('#imgpro').val("");
+                $('#view').show();
             }
         });
 
-        $('#view').show();
+        
     });
 
     $('body').on('click', '.edit', function (mem) {
@@ -85,6 +92,13 @@ $(document).ready(function () {
             url: 'users/' + id,
             type: 'GET',
             dataType: 'json',
+            cache: false,
+            beforeSend: function(){
+                $('#loading').show();
+            },
+            complete: function(){
+                $('#loading').hide();
+            },
             success: (data) => {
 
                 // console.log(data);                    
@@ -94,10 +108,11 @@ $(document).ready(function () {
                 $('#edit__des').val(data.des);
                 $('.imgPreview').attr('src', './img/' + data.img);
                 $('#imgpro').val("");
+                $('#edit').show();
             }
         });
 
-        $('#edit').show();
+       
     });
 
     /* Event modal */

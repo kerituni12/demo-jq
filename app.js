@@ -40,7 +40,7 @@ app.get('/users/:userid', (req, res) => {
     //delay res
     setTimeout(function () {
       res.send(val);
-    }, 600); 
+    }, 400); 
     
   } else {
     res.send({});
